@@ -1,5 +1,6 @@
-import { Josefin_Sans, Patua_One } from "next/font/google";
+import { Josefin_Sans, Fredoka } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/share/Navbar";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
@@ -9,10 +10,10 @@ const josefinSans = Josefin_Sans({
     preload: true,
 });
 
-const patuaOne = Patua_One({
+const fredoka = Fredoka({
     subsets: ['latin'],
-    weight: ['400'],
-    variable: '--font-patua',
+    weight: ['400', '700'],
+    variable: '--font-fredoka',
     display: 'swap',
     preload: true,
 });
@@ -25,9 +26,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en"
-            className={`${josefinSans.variable} ${patuaOne.variable} font-sans antialiased min-h-screen flex flex-col`}
+            className={`${josefinSans.variable} ${fredoka.variable} font-sans antialiased min-h-screen flex flex-col`}
         >
             <body className="min-h-full bg-white text-gray-900 dark:bg-[#0A0A0A] dark:text-gray-100 transition-colors duration-300">
+                <Navbar />
                 {children}
             </body>
         </html>
