@@ -1,4 +1,5 @@
 import Banner from "@/component/Banner"
+import FeatureSection from "@/component/FeatureSection"
 import HowItWorks from "@/component/HowItWorks"
 import OurImpact from "@/component/OurImpact"
 
@@ -8,6 +9,7 @@ function Home() {
             <Banner />
             <OurImpact />
             <HowItWorks />
+            <FeatureSection />
         </>
     )
 }
