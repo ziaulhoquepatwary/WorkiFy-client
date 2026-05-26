@@ -100,7 +100,7 @@ function Navbar() {
                             </Link>
 
                             <Link
-                                href="/get-started"
+                                href="/register"
                                 className="rounded-xl bg-[#1c4a36] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#1c4a36]/90 dark:bg-[#e4f5ee] dark:text-[#1c4a36] dark:hover:bg-white transition-all duration-200"
                             >
                                 Get Started
