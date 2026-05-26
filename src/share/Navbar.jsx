@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiMenu, HiX, HiSun, HiMoon } from "react-icons/hi";
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const [theme, setTheme] = useState("light");
+    const [mounted, setMounted] = useState(false);
     const pathname = usePathname();
 
 
@@ -17,9 +18,31 @@ function Navbar() {
         { name: "Pricing", href: "/pricing" },
     ];
 
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        setTheme(savedTheme);
+        if (savedTheme === "dark") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+        setMounted(true);
+    }, []);
+
+    const toggleTheme = () => {
+        const newTheme = theme === "dark" ? "light" : "dark";
+        setTheme(newTheme);
+        localStorage.setItem("theme", newTheme);
+        if (newTheme === "dark") {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    };
+
     const isActive = (path) => pathname === path;
 
-    const themeClass = isDarkMode ? "dark bg-[#0f291e] border-[#173f2e]" : "bg-white border-[#e4f5ee]";
+    const themeClass = theme === "dark" ? "dark bg-[#0f291e] border-[#173f2e]" : "bg-white border-[#e4f5ee]";
 
     return (
         <nav className={`sticky top-0 z-50 w-full border-b backdrop-blur-md transition-colors duration-300 ${themeClass}`}>
@@ -28,7 +51,7 @@ function Navbar() {
 
                     {/* 1. Brand Logo */}
                     <div className="flex-shrink-0">
-                        <Link href="/" className="text-2xl font-bold tracking-tight">
+                        <Link href="/" className="text-3xl font-bold font-heading tracking-tight">
                             <span className="text-[#1c4a36] dark:text-[#e4f5ee]">Worki</span>
                             <span className="text-gray-500 dark:text-white/70">Fy</span>
                         </Link>
@@ -46,7 +69,7 @@ function Navbar() {
                                         ? "bg-[#1c4a36] text-white shadow-sm dark:bg-[#e4f5ee] dark:text-[#1c4a36]"
                                         : "text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]"
                                         }`}
-                                >
+                                    align-items-center="true">
                                     {link.name}
                                 </Link>
                             ))}
@@ -57,13 +80,13 @@ function Navbar() {
 
                         {/* Theme & Auth Actions */}
                         <div className="flex items-center space-x-6">
-                            {/* Theme Toggle Button */}
+                            {/* Theme Toggle Button (Desktop) */}
                             <button
-                                onClick={() => setIsDarkMode(!isDarkMode)}
+                                onClick={toggleTheme}
                                 className="rounded-full p-2 text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e] transition-colors"
                                 aria-label="Toggle theme"
                             >
-                                {isDarkMode ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
+                                {mounted && theme === "dark" ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
                             </button>
 
                             <Link
@@ -87,16 +110,17 @@ function Navbar() {
 
                     {/* 3. Mobile Right-side Items */}
                     <div className="flex items-center space-x-3 md:hidden">
+                        {/* Theme Toggle Button (Mobile) */}
                         <button
-                            onClick={() => setIsDarkMode(!isDarkMode)}
+                            onClick={toggleTheme}
                             className="rounded-full p-2 text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]"
                             aria-label="Toggle theme"
                         >
-                            {isDarkMode ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
+                            {mounted && theme === "dark" ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
                         </button>
 
                         <button
-                            onClick={() => setIsOpen(!isOpen)}
+                            onClick={() => setIsOpen((prev) => !prev)}
                             className="inline-flex items-center justify-center rounded-lg p-2 text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e] focus:outline-none"
                         >
                             {isOpen ? <HiX className="h-6 w-6" /> : <HiMenu className="h-6 w-6" />}
@@ -138,7 +162,7 @@ function Navbar() {
 
                     <div className="mt-2 px-4">
                         <Link
-                            href="/get-started"
+                            href="/register"
                             onClick={() => setIsOpen(false)}
                             className="block w-full rounded-xl bg-[#1c4a36] py-3 text-center text-base font-semibold text-white shadow-md hover:bg-[#1c4a36]/90 dark:bg-[#e4f5ee] dark:text-[#1c4a36] dark:hover:bg-white"
                         >

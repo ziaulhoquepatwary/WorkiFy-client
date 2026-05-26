@@ -65,7 +65,7 @@ function Footer() {
 
                     {/* Brand Section */}
                     <div className="lg:col-span-2 space-y-4">
-                        <Link href="/" className="text-2xl font-bold tracking-tight">
+                        <Link href="/" className="text-2xl font-bold font-heading tracking-tight">
                             <span className="text-[#1c4a36] dark:text-[#e4f5ee]">Worki</span>
                             <span className="text-gray-500 dark:text-white/70">Fy</span>
                         </Link>
@@ -155,7 +155,7 @@ function Footer() {
                         &copy; {new Date().getFullYear()} WorkiFy. All rights reserved.
                     </p>
                     <p className="mt-2 text-xs text-[#1c4a36]/60 dark:text-[#e4f5ee]/60 md:mt-0">
-                        Designed with ❤️ for professional growth.
+                        WorkiFy – Smart Hiring. Seamless Discovery.
                     </p>
                 </div>
 
