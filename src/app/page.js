@@ -1,4 +1,5 @@
 import Banner from "@/component/Banner"
+import HowItWorks from "@/component/HowItWorks"
 import OurImpact from "@/component/OurImpact"
 
 function Home() {
@@ -6,6 +7,7 @@ function Home() {
         <>
             <Banner />
             <OurImpact />
+            <HowItWorks />
         </>
     )
 }
