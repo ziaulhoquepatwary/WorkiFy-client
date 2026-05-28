@@ -4,13 +4,18 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiMenu, HiX, HiSun, HiMoon } from "react-icons/hi";
+import { LogOut, User } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [theme, setTheme] = useState("light");
     const [mounted, setMounted] = useState(false);
+    const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
+    const { data: session, isPending } = authClient.useSession();
     const pathname = usePathname();
 
+    const user = session?.user;
 
     const navLinks = [
         { name: "Browse Jobs", href: "/jobs" },
@@ -59,7 +64,6 @@ function Navbar() {
 
                     {/* 2. Desktop Navigation & Actions */}
                     <div className="hidden md:flex md:items-center md:space-x-6">
-                        {/* Nav Links Container (Capsule style) */}
                         <div className="flex items-center space-x-1 rounded-full bg-[#e4f5ee]/40 dark:bg-[#173f2e]/50 p-1.5 border border-[#e4f5ee] dark:border-[#173f2e]">
                             {navLinks.map((link) => (
                                 <Link
@@ -68,8 +72,7 @@ function Navbar() {
                                     className={`rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 ${isActive(link.href)
                                         ? "bg-[#1c4a36] text-white shadow-sm dark:bg-[#e4f5ee] dark:text-[#1c4a36]"
                                         : "text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]"
-                                        }`}
-                                    align-items-center="true">
+                                        }`}>
                                     {link.name}
                                 </Link>
                             ))}
@@ -80,7 +83,6 @@ function Navbar() {
 
                         {/* Theme & Auth Actions */}
                         <div className="flex items-center space-x-6">
-                            {/* Theme Toggle Button (Desktop) */}
                             <button
                                 onClick={toggleTheme}
                                 className="rounded-full p-2 text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e] transition-colors"
@@ -89,28 +91,88 @@ function Navbar() {
                                 {mounted && theme === "dark" ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
                             </button>
 
-                            <Link
-                                href="/signin"
-                                className={`text-sm font-semibold transition-colors ${isActive("/signin")
-                                    ? "text-[#1c4a36] dark:text-white"
-                                    : "text-[#1c4a36]/80 hover:text-[#1c4a36] dark:text-[#e4f5ee]/80 dark:hover:text-white"
-                                    }`}
-                            >
-                                Sign In
-                            </Link>
+                            {/* ── Auth: Desktop ── */}
+                            {isPending ? (
+                                <div className="w-10 h-10 rounded-full bg-[#e4f5ee] dark:bg-[#173f2e] animate-pulse" />
+                            ) : user ? (
+                                <div className="relative">
+                                    {/* Avatar Button */}
+                                    <button
+                                        onClick={() => setAvatarMenuOpen((prev) => !prev)}
+                                        className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#1c4a36] dark:border-[#e4f5ee] hover:opacity-90 transition-opacity"
+                                    >
+                                        <img
+                                            src={user?.image || "/user.png"}
+                                            alt={user?.name}
+                                            className="object-cover w-10 h-10"
+                                        />
+                                    </button>
 
-                            <Link
-                                href="/register"
-                                className="rounded-xl bg-[#1c4a36] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#1c4a36]/90 dark:bg-[#e4f5ee] dark:text-[#1c4a36] dark:hover:bg-white transition-all duration-200"
-                            >
-                                Get Started
-                            </Link>
+                                    {/* Dropdown */}
+                                    {avatarMenuOpen && (
+                                        <div className="absolute right-0 top-12 w-56 bg-white dark:bg-[#0f291e] rounded-xl border border-[#e4f5ee] dark:border-[#173f2e] shadow-lg z-50">
+                                            {/* User Info */}
+                                            <div className="flex items-center gap-3 px-4 py-3 border-b border-[#e4f5ee] dark:border-[#173f2e]">
+                                                <img
+                                                    src={user?.image || "/user.png"}
+                                                    alt={user?.name}
+                                                    className="w-10 h-10 rounded-full object-cover"
+                                                />
+                                                <div className="overflow-hidden">
+                                                    <p className="text-sm font-semibold text-[#1c4a36] dark:text-[#e4f5ee] truncate">{user?.name}</p>
+                                                    <p className="text-xs text-gray-400 dark:text-gray-500 truncate">{user?.email}</p>
+                                                </div>
+                                            </div>
+                                            {/* Actions */}
+                                            <div className="p-2">
+                                                <Link
+                                                    href="/my-profile"
+                                                    onClick={() => setAvatarMenuOpen(false)}
+                                                    className="flex items-center gap-2 w-full px-3 py-2 text-sm text-[#1c4a36] dark:text-[#e4f5ee] rounded-lg hover:bg-[#e4f5ee] dark:hover:bg-[#173f2e] transition-colors"
+                                                >
+                                                    <User size={15} /> My Profile
+                                                </Link>
+                                                <button
+                                                    onClick={() => {
+                                                        setAvatarMenuOpen(false);
+                                                        authClient.signOut({
+                                                            fetchOptions: {
+                                                                onSuccess: () => { window.location.href = "/"; }
+                                                            }
+                                                        });
+                                                    }}
+                                                    className="flex items-center gap-2 w-full px-3 py-2 text-sm text-red-500 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
+                                                >
+                                                    <LogOut size={15} /> Logout
+                                                </button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <>
+                                    <Link
+                                        href="/signin"
+                                        className={`text-sm font-semibold transition-colors ${isActive("/signin")
+                                            ? "text-[#1c4a36] dark:text-white"
+                                            : "text-[#1c4a36]/80 hover:text-[#1c4a36] dark:text-[#e4f5ee]/80 dark:hover:text-white"
+                                            }`}
+                                    >
+                                        Sign In
+                                    </Link>
+                                    <Link
+                                        href="/register"
+                                        className="rounded-xl bg-[#1c4a36] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#1c4a36]/90 dark:bg-[#e4f5ee] dark:text-[#1c4a36] dark:hover:bg-white transition-all duration-200"
+                                    >
+                                        Get Started
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     </div>
 
                     {/* 3. Mobile Right-side Items */}
                     <div className="flex items-center space-x-3 md:hidden">
-                        {/* Theme Toggle Button (Mobile) */}
                         <button
                             onClick={toggleTheme}
                             className="rounded-full p-2 text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]"
@@ -149,26 +211,69 @@ function Navbar() {
 
                     <div className="my-4 h-px w-full bg-[#e4f5ee] dark:bg-[#173f2e]" />
 
-                    <Link
-                        href="/signin"
-                        onClick={() => setIsOpen(false)}
-                        className={`block rounded-lg px-4 py-2.5 text-base font-medium ${isActive("/signin")
-                            ? "text-[#1c4a36] dark:text-white"
-                            : "text-[#1c4a36] hover:bg-[#e4f5ee]/50 dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]/50"
-                            }`}
-                    >
-                        Sign In
-                    </Link>
-
-                    <div className="mt-2 px-4">
-                        <Link
-                            href="/register"
-                            onClick={() => setIsOpen(false)}
-                            className="block w-full rounded-xl bg-[#1c4a36] py-3 text-center text-base font-semibold text-white shadow-md hover:bg-[#1c4a36]/90 dark:bg-[#e4f5ee] dark:text-[#1c4a36] dark:hover:bg-white"
-                        >
-                            Get Started
-                        </Link>
-                    </div>
+                    {/* ── Auth: Mobile ── */}
+                    {isPending ? (
+                        <div className="w-full h-12 bg-[#e4f5ee] dark:bg-[#173f2e] animate-pulse rounded-xl" />
+                    ) : user ? (
+                        <div className="flex flex-col space-y-3">
+                            {/* User Info */}
+                            <div className="flex items-center gap-3 px-2 py-1">
+                                <img
+                                    src={user?.image || "/user.png"}
+                                    alt={user?.name}
+                                    className="w-10 h-10 rounded-full object-cover border-2 border-[#1c4a36] dark:border-[#e4f5ee]"
+                                />
+                                <div className="overflow-hidden">
+                                    <p className="text-sm font-semibold text-[#1c4a36] dark:text-[#e4f5ee] truncate">{user?.name}</p>
+                                    <p className="text-xs text-gray-400 dark:text-gray-500 truncate">{user?.email}</p>
+                                </div>
+                            </div>
+                            {/* My Profile */}
+                            <Link
+                                href="/my-profile"
+                                onClick={() => setIsOpen(false)}
+                                className="flex items-center justify-center gap-2 border border-[#e4f5ee] dark:border-[#173f2e] w-full py-3 rounded-xl font-medium text-[#1c4a36] dark:text-[#e4f5ee] hover:bg-[#e4f5ee]/50 dark:hover:bg-[#173f2e]/50 transition-colors"
+                            >
+                                <User size={16} /> My Profile
+                            </Link>
+                            {/* Logout */}
+                            <button
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    authClient.signOut({
+                                        fetchOptions: {
+                                            onSuccess: () => { window.location.href = "/"; }
+                                        }
+                                    });
+                                }}
+                                className="flex items-center justify-center gap-2 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 w-full py-3 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-950/40 transition-colors"
+                            >
+                                <LogOut size={16} /> Logout
+                            </button>
+                        </div>
+                    ) : (
+                        <>
+                            <Link
+                                href="/signin"
+                                onClick={() => setIsOpen(false)}
+                                className={`block rounded-lg px-4 py-2.5 text-base font-medium ${isActive("/signin")
+                                    ? "text-[#1c4a36] dark:text-white"
+                                    : "text-[#1c4a36] hover:bg-[#e4f5ee]/50 dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]/50"
+                                    }`}
+                            >
+                                Sign In
+                            </Link>
+                            <div className="mt-2 px-4">
+                                <Link
+                                    href="/register"
+                                    onClick={() => setIsOpen(false)}
+                                    className="block w-full rounded-xl bg-[#1c4a36] py-3 text-center text-base font-semibold text-white shadow-md hover:bg-[#1c4a36]/90 dark:bg-[#e4f5ee] dark:text-[#1c4a36] dark:hover:bg-white"
+                                >
+                                    Get Started
+                                </Link>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
