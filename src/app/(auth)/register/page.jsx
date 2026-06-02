@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { Eye, EyeOff, Mail, Lock, User, Image as ImageIcon, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Image as ImageIcon, ArrowRight, Briefcase } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaHome } from "react-icons/fa";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -15,7 +15,11 @@ function Register() {
     const searchParams = useSearchParams();
     const [showPassword, setShowPassword] = useState(false);
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        defaultValues: {
+            role: "seeker"
+        }
+    });
 
     const getRedirectUrl = () => {
         const redirect =
@@ -33,6 +37,7 @@ function Register() {
             email: userData.email,
             password: userData.password,
             image: userData.imageUrl,
+            role: userData.role,
         });
 
         console.log(data, error);
@@ -75,7 +80,7 @@ function Register() {
                 <div className="text-center space-y-2">
                     <h2 className="text-3xl font-extrabold font-heading tracking-tight text-[#1c4a36] dark:text-[#e4f5ee]">
                         Create Your{" "}
-                        <span className="text-[#1c4a36] dark:text-white">
+                        <span className="text-[#1c4a36] dark:white">
                             Account
                         </span>
                     </h2>
@@ -144,6 +149,28 @@ function Register() {
                                 {errors.email.message}
                             </p>
                         )}
+                    </div>
+
+                    {/* Role Selection */}
+                    <div className="space-y-1">
+                        <label className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-[#e4f5ee]/70 block">
+                            Register As
+                        </label>
+                        <div className="relative">
+                            <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-gray-400">
+                                <Briefcase size={18} />
+                            </span>
+                            <select
+                                {...register("role")}
+                                className="w-full pl-11 pr-4 py-3 bg-white dark:bg-[#0f291e] border border-[#e4f5ee] dark:border-[#214d39] rounded-xl text-sm focus:outline-none focus:border-[#1c4a36] focus:ring-2 focus:ring-[#1c4a36]/20 transition-all text-gray-900 dark:text-[#e4f5ee] appearance-none cursor-pointer"
+                            >
+                                <option value="seeker">Job Seeker</option>
+                                <option value="recruiter">Recruiter</option>
+                            </select>
+                            <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none text-gray-400">
+                                ▾
+                            </span>
+                        </div>
                     </div>
 
                     {/* Password */}
