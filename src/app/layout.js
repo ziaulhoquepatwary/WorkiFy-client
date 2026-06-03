@@ -1,5 +1,6 @@
 import { Josefin_Sans, Fredoka } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
@@ -29,7 +30,9 @@ export default function RootLayout({ children }) {
             className={`${josefinSans.variable} ${fredoka.variable} h-full antialiased`}
         >
             <body className="min-h-full">
-                {children}
+                <ThemeProvider>
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );

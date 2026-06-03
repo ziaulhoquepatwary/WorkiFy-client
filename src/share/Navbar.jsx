@@ -1,17 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { HiMenu, HiX, HiSun, HiMoon } from "react-icons/hi";
+import { HiMenu, HiX } from "react-icons/hi";
 import { LogOut, User } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import { useTheme } from "@/context/ThemeContext";
+import ThemeToggle from "@/component/ThemeToggle";
 
 function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
-    const [theme, setTheme] = useState("light");
-    const [mounted, setMounted] = useState(false);
     const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
+    const { theme, toggleTheme, mounted } = useTheme();
     const { data: session, isPending } = authClient.useSession();
     const pathname = usePathname();
 
@@ -22,28 +23,6 @@ function Navbar() {
         { name: "Company", href: "/company" },
         { name: "Pricing", href: "/pricing" },
     ];
-
-    useEffect(() => {
-        const savedTheme = localStorage.getItem("theme") || "light";
-        setTheme(savedTheme);
-        if (savedTheme === "dark") {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
-        }
-        setMounted(true);
-    }, []);
-
-    const toggleTheme = () => {
-        const newTheme = theme === "dark" ? "light" : "dark";
-        setTheme(newTheme);
-        localStorage.setItem("theme", newTheme);
-        if (newTheme === "dark") {
-            document.documentElement.classList.add("dark");
-        } else {
-            document.documentElement.classList.remove("dark");
-        }
-    };
 
     const isActive = (path) => pathname === path;
 
@@ -83,13 +62,7 @@ function Navbar() {
 
                         {/* Theme & Auth Actions */}
                         <div className="flex items-center space-x-6">
-                            <button
-                                onClick={toggleTheme}
-                                className="rounded-full p-2 text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e] transition-colors"
-                                aria-label="Toggle theme"
-                            >
-                                {mounted && theme === "dark" ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
-                            </button>
+                            <ThemeToggle />
 
                             {/* ── Auth: Desktop ── */}
                             {isPending ? (
@@ -173,13 +146,7 @@ function Navbar() {
 
                     {/* 3. Mobile Right-side Items */}
                     <div className="flex items-center space-x-3 md:hidden">
-                        <button
-                            onClick={toggleTheme}
-                            className="rounded-full p-2 text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]"
-                            aria-label="Toggle theme"
-                        >
-                            {mounted && theme === "dark" ? <HiSun className="h-5 w-5" /> : <HiMoon className="h-5 w-5" />}
-                        </button>
+                        <ThemeToggle />
 
                         <button
                             onClick={() => setIsOpen((prev) => !prev)}
