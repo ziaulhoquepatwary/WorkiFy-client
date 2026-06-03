@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HiMenu, HiX } from "react-icons/hi";
-import { LogOut, User } from "lucide-react";
+import { LayoutDashboard, LogOut, User } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { useTheme } from "@/context/ThemeContext";
 import ThemeToggle from "@/component/ThemeToggle";
@@ -17,6 +17,9 @@ function Navbar() {
     const pathname = usePathname();
 
     const user = session?.user;
+
+    const role = user?.role;
+    const dashboardHref = role === "recruiter" ? "/recruiter" : "/seeker";
 
     const navLinks = [
         { name: "Browse Jobs", href: "/jobs" },
@@ -98,6 +101,16 @@ function Navbar() {
                                             </div>
                                             {/* Actions */}
                                             <div className="p-2">
+                                                {role && (
+                                                    <Link
+                                                        href={dashboardHref}
+                                                        onClick={() => setAvatarMenuOpen(false)}
+                                                        className="flex items-center gap-2 w-full px-3 py-2 text-sm text-[#1c4a36] dark:text-[#e4f5ee] rounded-lg hover:bg-[#e4f5ee] dark:hover:bg-[#173f2e] transition-colors font-medium"
+                                                    >
+                                                        <LayoutDashboard size={15} /> Dashboard
+                                                    </Link>
+                                                )}
+
                                                 <Link
                                                     href="/my-profile"
                                                     onClick={() => setAvatarMenuOpen(false)}
@@ -195,6 +208,17 @@ function Navbar() {
                                     <p className="text-xs text-gray-400 dark:text-gray-500 truncate">{user?.email}</p>
                                 </div>
                             </div>
+
+                            {/* {dashboard} */}
+                            {role && (
+                                <Link
+                                    href={dashboardHref}
+                                    onClick={() => setIsOpen(false)}
+                                    className="flex items-center justify-center gap-2 bg-[#1c4a36] text-white dark:bg-[#e4f5ee] dark:text-[#1c4a36] w-full py-3 rounded-xl font-medium hover:opacity-90 transition-colors"
+                                >
+                                    <LayoutDashboard size={16} /> Dashboard
+                                </Link>
+                            )}
                             {/* My Profile */}
                             <Link
                                 href="/my-profile"

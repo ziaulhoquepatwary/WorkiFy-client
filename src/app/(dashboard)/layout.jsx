@@ -1,7 +1,7 @@
 "use client";
-import DashboardHeader from "@/component/dashboard/DashboardHeader";
-import DashboardSidebar from "@/component/dashboard/DashboardSidebar"
 import { useState } from "react";
+import DashboardSidebar from "./component/dashboard/DashboardSidebar";
+import DashboardHeader from "./component/dashboard/DashboardHeader";
 
 function Dashboard({ children }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
