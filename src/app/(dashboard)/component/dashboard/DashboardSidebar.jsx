@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User } from "lucide-react";
+import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User, FilePlusCorner } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
 function DashboardSidebar() {
@@ -14,6 +14,7 @@ function DashboardSidebar() {
 
     const recruiterMenu = [
         { name: "Dashboard", href: "/recruiter", icon: LayoutDashboard },
+        { name: "Create Job", href: "/recruiter/create-job", icon: FilePlusCorner },
         { name: "My Company", href: "/recruiter/company", icon: Building2 },
         { name: "Manage Jobs", href: "/recruiter/manage-jobs", icon: Briefcase },
         { name: "Applications", href: "/recruiter/applications", icon: FileText },
