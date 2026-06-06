@@ -3,6 +3,8 @@
 import { useForm } from "react-hook-form";
 import { Briefcase, MapPin, UserCheck, FileText, Calendar, Plus, X, DollarSign } from "lucide-react";
 import { useState } from "react";
+import { createJob } from "@/lib/actions/jobs";
+import Swal from "sweetalert2";
 
 // Shared validation error message component
 const ErrorMessage = ({ message }) => (
@@ -29,8 +31,35 @@ function CreateJob() {
     const onSubmit = async (data) => {
         console.log("Submitted Data:", data);
 
-        reset();
-        setSkills([]);
+        try {
+            const res = await createJob(data);
+
+            if (res?.success) {
+                await Swal.fire({
+                    icon: "success",
+                    title: "Job Published 🚀",
+                    text: res.message || "Your Job was submitted successfully.",
+                    background: "#0A0A0A",
+                    color: "#ffffff",
+                    confirmButtonColor: "#10b981",
+                    timer: 2200,
+                    showConfirmButton: false,
+                });
+                reset();
+                setSkills([]);
+            }
+        } catch (error) {
+            const message = error?.response?.data?.message || "Something went wrong!";
+
+            Swal.fire({
+                icon: "error",
+                title: "Submission Failed",
+                text: message,
+                background: "#0A0A0A",
+                color: "#ffffff",
+                confirmButtonColor: "#ef4444",
+            });
+        }
     };
 
     // Shared styling classes to make inputs visible, structured, and consistent across light/dark modes
@@ -65,6 +94,7 @@ function CreateJob() {
                                 <option value="Software & IT" className="dark:bg-[#0f291e]">Software & IT</option>
                                 <option value="Marketing" className="dark:bg-[#0f291e]">Marketing</option>
                                 <option value="Design" className="dark:bg-[#0f291e]">Design</option>
+                                <option value="Healthcare" className="dark:bg-[#0f291e]">Healthcare</option>
                             </select>
                             <ErrorMessage message={errors.job_category?.message} />
                         </div>
