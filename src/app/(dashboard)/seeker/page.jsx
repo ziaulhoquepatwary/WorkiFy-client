@@ -3,13 +3,14 @@
 import { authClient } from "@/lib/auth-client";
 import { Briefcase, Calendar, Award, BookOpen } from "lucide-react";
 import DashboardCard from "../component/dashboard/DashboardCard";
+import Loading from "@/app/loading";
 
 function JobSeekerDashboard() {
     const { data: session, isPending } = authClient.useSession();
     const user = session?.user;
 
     if (isPending) {
-        return <div className="text-[#1c4a36] dark:text-[#e4f5ee]">Loading...</div>;
+        return <Loading />
     }
 
     const stats = [

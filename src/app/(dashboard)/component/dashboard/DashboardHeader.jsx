@@ -3,6 +3,7 @@
 import { Search, Bell, Menu } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import ThemeToggle from "@/component/ThemeToggle";
+import Loading from "@/app/loading";
 
 function DashboardHeader({ onMenuClick }) {
     const { data: session, isPending } = authClient.useSession();
@@ -10,7 +11,7 @@ function DashboardHeader({ onMenuClick }) {
     const user = session?.user;
 
     if (isPending) {
-        return <div>Loading...</div>
+        return <Loading />
     }
 
     return (

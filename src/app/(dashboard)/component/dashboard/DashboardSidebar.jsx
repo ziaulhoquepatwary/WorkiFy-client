@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User, FilePlusCorner } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import Loading from "@/app/loading";
 
 function DashboardSidebar() {
     const pathname = usePathname();
@@ -32,7 +33,7 @@ function DashboardSidebar() {
     const menuItems = user?.role === "recruiter" ? recruiterMenu : jobSeekerMenu;
 
     if (isPending) {
-        return <div>Loading...</div>
+        return <Loading />
     }
 
     return (
