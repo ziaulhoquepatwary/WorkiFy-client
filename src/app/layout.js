@@ -1,6 +1,7 @@
 import { Josefin_Sans, Fredoka } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import AuthProvider from "@/component/AuthProvider";
 
 const josefinSans = Josefin_Sans({
     subsets: ['latin'],
@@ -31,7 +32,9 @@ export default function RootLayout({ children }) {
         >
             <body className="min-h-full">
                 <ThemeProvider>
-                    {children}
+                    <AuthProvider>
+                        {children}
+                    </AuthProvider>
                 </ThemeProvider>
             </body>
         </html>

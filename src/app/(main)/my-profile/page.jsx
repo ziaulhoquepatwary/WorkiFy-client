@@ -90,7 +90,7 @@ function MyProfile() {
                         </Link>
                         <div>
                             <h1 className="text-2xl font-black tracking-tight text-[#1c4a36] dark:text-white">Account Pipeline</h1>
-                            <p className="text-xs text-slate-400 dark:text-[#e4f5ee]/60 uppercase tracking-wider font-semibold">User Identity</p>
+                            <p className="text-xs text-slate-400 dark:text-[#e4f5ee]/60 uppercase tracking-wider font-semibold">{user?.role || "User"} Identity</p>
                         </div>
                     </div>
 
