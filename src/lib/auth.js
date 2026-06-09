@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { MongoClient } from "mongodb";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { sendEmail } from "./email";
 
 
 const client = new MongoClient(process.env.MONGODB_URI);
@@ -14,10 +15,47 @@ export const auth = betterAuth({
     database: mongodbAdapter(db, {
         client
     }),
+
+    emailVerification: {
+        sendOnSignUp: true,
+        sendVerificationEmail: async ({ user, url, token }, request) => {
+            await sendEmail({
+                to: user.email,
+                subject: 'Verify your email address - WorkiFy',
+                text: `Click the link to verify your email: ${url}`,
+            });
+        }
+    },
+
     user: {
         additionalFields: {
             role: {
-                defaultValue: "seeker"
+                type: "string",
+                defaultValue: "seeker" // seeker, recruiter, admin
+            },
+            approvalStatus: {
+                type: "string",
+                defaultValue: "pending" // pending, approved, rejected
+            },
+            phoneNumber: {
+                type: "string",
+                defaultValue: ""
+            },
+            bio: {
+                type: "string",
+                defaultValue: ""
+            },
+            plan: {
+                type: "string",
+                defaultValue: "free" // free, pro, premium,
+            },
+            usageCount: {
+                type: "number",
+                defaultValue: 0
+            },
+            lastActionDate: {
+                type: "date",
+                defaultValue: new Date()
             }
         }
     },
