@@ -9,7 +9,7 @@ function Dashboard({ children }) {
         <div className="flex min-h-screen bg-slate-50 dark:bg-[#0f291e]/95 transition-colors duration-300">
 
             <div className={`fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 md:relative md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
-                <DashboardSidebar />
+                <DashboardSidebar isOpen={isSidebarOpen} closeSidebar={() => setIsSidebarOpen(false)} />
             </div>
 
             {isSidebarOpen && (

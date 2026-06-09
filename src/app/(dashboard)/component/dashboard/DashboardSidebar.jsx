@@ -6,12 +6,11 @@ import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight
 import { authClient } from "@/lib/auth-client";
 import Loading from "@/app/loading";
 
-function DashboardSidebar() {
+function DashboardSidebar({ isOpen, closeSidebar }) {
     const pathname = usePathname();
     const { data: session, isPending } = authClient.useSession();
 
     const user = session?.user;
-
 
     const recruiterMenu = [
         { name: "Dashboard", href: "/recruiter", icon: LayoutDashboard },
@@ -36,9 +35,19 @@ function DashboardSidebar() {
         return <Loading />
     }
 
+    if (!user) return null;
+
     return (
-        <aside className="w-64 min-h-screen flex flex-col justify-between border-r transition-colors duration-300 bg-white border-[#e4f5ee] text-slate-700 dark:bg-[#0f291e] dark:border-[#173f2e] dark:text-[#e4f5ee]/80">
-            <div className="flex flex-col pt-6">
+        <aside
+            className={`
+                w-64 h-screen flex flex-col justify-between border-r transition-all duration-300 z-50
+                bg-white border-[#e4f5ee] text-slate-700 
+                dark:bg-[#0f291e] dark:border-[#173f2e] dark:text-[#e4f5ee]/80
+                fixed inset-y-0 left-0 md:sticky md:top-0
+                ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+            `}
+        >
+            <div className="flex flex-col pt-6 overflow-y-auto flex-1">
                 <div className="px-6 mb-8">
                     <Link href="/" className="text-3xl font-bold font-heading tracking-tight">
                         <span className="text-[#1c4a36] dark:text-[#e4f5ee]">Worki</span>
@@ -80,6 +89,7 @@ function DashboardSidebar() {
                             <Link
                                 key={item.name}
                                 href={item.href}
+                                onClick={() => closeSidebar?.()}
                                 className={`group flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 ${isActive
                                     ? "bg-[#1c4a36] text-white shadow-md shadow-[#1c4a36]/10 dark:bg-[#e4f5ee] dark:text-[#1c4a36]"
                                     : "text-slate-600 hover:bg-[#e4f5ee]/50 hover:text-[#1c4a36] dark:text-[#e4f5ee]/70 dark:hover:bg-[#173f2e] dark:hover:text-[#e4f5ee]"
@@ -107,4 +117,4 @@ function DashboardSidebar() {
     )
 }
 
-export default DashboardSidebar
+export default DashboardSidebar;
