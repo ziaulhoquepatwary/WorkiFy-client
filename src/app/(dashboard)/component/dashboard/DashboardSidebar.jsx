@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User, FilePlusCorner } from "lucide-react";
+import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User, FilePlusCorner, Users, UserPlus, UserCheck, CreditCard } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import Loading from "@/app/loading";
 
@@ -21,15 +21,16 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
         { name: "Settings", href: "/recruiter/settings", icon: Settings },
     ];
 
-    const jobSeekerMenu = [
-        { name: "Dashboard", href: "/job-seeker", icon: LayoutDashboard },
-        { name: "Find Jobs", href: "/job-seeker/jobs", icon: Briefcase },
-        { name: "My Applications", href: "/job-seeker/my-applications", icon: FileText },
-        { name: "Resume/CV", href: "/job-seeker/resume", icon: User },
-        { name: "Settings", href: "/job-seeker/settings", icon: Settings },
+    const adminMenu = [
+        { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
+        { name: "Pending Users", href: "/admin/pending-users", icon: UserPlus },
+        { name: "Pending Recruiter", href: "/admin/pending-recruiters", icon: UserCheck },
+        { name: "All Users", href: "/admin/all-users", icon: Users },
+        { name: "Change Plan", href: "/admin/change-plan", icon: CreditCard },
+        { name: "Settings", href: "/admin/settings", icon: Settings },
     ];
 
-    const menuItems = user?.role === "recruiter" ? recruiterMenu : jobSeekerMenu;
+    const menuItems = user?.role === "recruiter" ? recruiterMenu : adminMenu;
 
     if (isPending) {
         return <Loading />

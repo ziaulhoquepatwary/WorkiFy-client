@@ -19,7 +19,7 @@ function Navbar() {
     const user = session?.user;
 
     const role = user?.role;
-    const dashboardHref = role === "recruiter" ? "/recruiter" : "/seeker";
+    const dashboardHref = role === "recruiter" ? "/recruiter" : "/admin";
 
     const navLinks = [
         { name: "Browse Jobs", href: "/jobs" },

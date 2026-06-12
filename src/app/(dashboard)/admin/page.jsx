@@ -1,11 +1,11 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import { Briefcase, Calendar, Award, BookOpen } from "lucide-react";
+import { Users, UserPlus, Building2, CreditCard } from "lucide-react";
 import DashboardCard from "../component/dashboard/DashboardCard";
 import Loading from "@/app/loading";
 
-function JobSeekerDashboard() {
+function AdminDashboard() {
     const { data: session, isPending } = authClient.useSession();
     const user = session?.user;
 
@@ -14,10 +14,10 @@ function JobSeekerDashboard() {
     }
 
     const stats = [
-        { title: "Applied Jobs", value: "24", icon: Briefcase },
-        { title: "Interviews", value: "5", icon: Calendar },
-        { title: "Offers Received", value: "2", icon: Award },
-        { title: "Profile Views", value: "148", icon: BookOpen },
+        { title: "Total Users", value: "1,248", icon: Users },
+        { title: "Pending Users", value: "32", icon: UserPlus },
+        { title: "Pending Recruiters", value: "12", icon: Building2 },
+        { title: "Active Plans", value: "148", icon: CreditCard },
     ];
 
     return (
@@ -25,7 +25,7 @@ function JobSeekerDashboard() {
             {/* Welcome Section */}
             <div>
                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1c4a36] dark:text-[#e4f5ee]">
-                    Welcome back, {user?.name || "Job Seeker"}
+                    Welcome back, {user?.name || "Admin"}
                 </h1>
                 <p className="text-sm text-slate-500 dark:text-[#e4f5ee]/60 mt-1">
                     Track your applications and premium career opportunities.
@@ -48,4 +48,4 @@ function JobSeekerDashboard() {
     );
 }
 
-export default JobSeekerDashboard;
+export default AdminDashboard;

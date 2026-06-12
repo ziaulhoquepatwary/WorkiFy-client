@@ -17,13 +17,19 @@ export const auth = betterAuth({
     }),
 
     emailVerification: {
-        sendOnSignUp: true,
-        sendVerificationEmail: async ({ user, url, token }, request) => {
-            await sendEmail({
+        sendVerificationEmail: async ({ user, url }) => {
+            void sendEmail({
                 to: user.email,
-                subject: 'Verify your email address - WorkiFy',
+                subject: "Verify your email address",
                 text: `Click the link to verify your email: ${url}`,
             });
+        },
+        sendOnSignIn: true,
+    },
+
+    session: {
+        fields: {
+            user: ["role", "approvalStatus", "plan", "usageCount", "lastActionDate"]
         }
     },
 
