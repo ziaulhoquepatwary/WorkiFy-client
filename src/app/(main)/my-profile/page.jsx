@@ -35,7 +35,6 @@ function MyProfile() {
             image: data.image,
             phoneNumber: data.phoneNumber,
             bio: data.bio,
-            approvalStatus: "pending"
         });
 
         setIsUpdating(false);

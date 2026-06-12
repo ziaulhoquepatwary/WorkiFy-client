@@ -9,13 +9,13 @@ const JobPage = () => {
     const [searchInp, setSearchInp] = useState("");
     const [categoryInp, setCategoryInp] = useState("All Categories");
     const [jobTypesInp, setJobTypesInp] = useState([]);
-    const [salaryInp, setSalaryInp] = useState(20000);
+    const [salaryInp, setSalaryInp] = useState(500000);
 
     const [activeFilters, setActiveFilters] = useState({
         search: "",
         category: "All Categories",
         jobType: [],
-        maxSalary: 20000,
+        maxSalary: 500000,
         page: 1
     });
 
@@ -60,13 +60,13 @@ const JobPage = () => {
         setSearchInp("");
         setCategoryInp("All Categories");
         setJobTypesInp([]);
-        setSalaryInp(20000);
+        setSalaryInp(500000);
 
         setActiveFilters({
             search: "",
             category: "All Categories",
             jobType: [],
-            maxSalary: 20000,
+            maxSalary: 500000,
             page: 1
         });
     };
@@ -160,7 +160,7 @@ const JobPage = () => {
                             <input
                                 type="range"
                                 min="0"
-                                max="20000"
+                                max="500000"
                                 value={salaryInp}
                                 onChange={(e) => setSalaryInp(Number(e.target.value))}
                                 className="w-full accent-[#1c4a36] dark:accent-[#e4f5ee] h-2 bg-slate-200 dark:bg-[#0f291e] rounded-lg cursor-pointer"
@@ -168,7 +168,7 @@ const JobPage = () => {
                             <div className="flex justify-between items-center mt-3 text-xs font-medium text-slate-500 dark:text-[#e4f5ee]/60">
                                 <span>$0/mo</span>
                                 <span className="text-amber-500 font-bold">${salaryInp.toLocaleString()}/mo</span>
-                                <span>$20,000/mo</span>
+                                <span>$500,000/mo</span>
                             </div>
                         </div>
 
