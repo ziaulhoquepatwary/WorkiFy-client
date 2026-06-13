@@ -17,9 +17,10 @@ function Navbar() {
     const pathname = usePathname();
 
     const user = session?.user;
-
     const role = user?.role;
+
     const dashboardHref = role === "recruiter" ? "/recruiter" : "/admin";
+    const showDashboard = role && role !== "seeker";
 
     const navLinks = [
         { name: "Browse Jobs", href: "/jobs" },
@@ -54,7 +55,8 @@ function Navbar() {
                                     className={`rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 ${isActive(link.href)
                                         ? "bg-[#1c4a36] text-white shadow-sm dark:bg-[#e4f5ee] dark:text-[#1c4a36]"
                                         : "text-[#1c4a36] hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]"
-                                        }`}>
+                                        }`}
+                                >
                                     {link.name}
                                 </Link>
                             ))}
@@ -101,7 +103,7 @@ function Navbar() {
                                             </div>
                                             {/* Actions */}
                                             <div className="p-2">
-                                                {role && (
+                                                {showDashboard && (
                                                     <Link
                                                         href={dashboardHref}
                                                         onClick={() => setAvatarMenuOpen(false)}
@@ -209,8 +211,7 @@ function Navbar() {
                                 </div>
                             </div>
 
-                            {/* {dashboard} */}
-                            {role && (
+                            {showDashboard && (
                                 <Link
                                     href={dashboardHref}
                                     onClick={() => setIsOpen(false)}
@@ -219,6 +220,7 @@ function Navbar() {
                                     <LayoutDashboard size={16} /> Dashboard
                                 </Link>
                             )}
+
                             {/* My Profile */}
                             <Link
                                 href="/my-profile"
@@ -268,7 +270,7 @@ function Navbar() {
                 </div>
             </div>
         </nav>
-    )
+    );
 }
 
-export default Navbar
+export default Navbar;

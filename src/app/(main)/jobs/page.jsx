@@ -4,18 +4,19 @@ import React, { useState, useEffect } from 'react';
 import { Search, MapPin, Briefcase, Clock, Bookmark, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { getAllJobsAction } from '@/lib/actions/jobs';
+import JobCard from '@/component/JobCard';
 
 const JobPage = () => {
     const [searchInp, setSearchInp] = useState("");
     const [categoryInp, setCategoryInp] = useState("All Categories");
     const [jobTypesInp, setJobTypesInp] = useState([]);
-    const [salaryInp, setSalaryInp] = useState(500000);
+    const [salaryInp, setSalaryInp] = useState(150000);
 
     const [activeFilters, setActiveFilters] = useState({
         search: "",
         category: "All Categories",
         jobType: [],
-        maxSalary: 500000,
+        maxSalary: 150000,
         page: 1
     });
 
@@ -60,13 +61,13 @@ const JobPage = () => {
         setSearchInp("");
         setCategoryInp("All Categories");
         setJobTypesInp([]);
-        setSalaryInp(500000);
+        setSalaryInp(150000);
 
         setActiveFilters({
             search: "",
             category: "All Categories",
             jobType: [],
-            maxSalary: 500000,
+            maxSalary: 150000,
             page: 1
         });
     };
@@ -160,7 +161,7 @@ const JobPage = () => {
                             <input
                                 type="range"
                                 min="0"
-                                max="500000"
+                                max="150000"
                                 value={salaryInp}
                                 onChange={(e) => setSalaryInp(Number(e.target.value))}
                                 className="w-full accent-[#1c4a36] dark:accent-[#e4f5ee] h-2 bg-slate-200 dark:bg-[#0f291e] rounded-lg cursor-pointer"
@@ -168,7 +169,7 @@ const JobPage = () => {
                             <div className="flex justify-between items-center mt-3 text-xs font-medium text-slate-500 dark:text-[#e4f5ee]/60">
                                 <span>$0/mo</span>
                                 <span className="text-amber-500 font-bold">${salaryInp.toLocaleString()}/mo</span>
-                                <span>$500,000/mo</span>
+                                <span>$150,000/mo</span>
                             </div>
                         </div>
 
@@ -198,46 +199,7 @@ const JobPage = () => {
                         ) : (
                             <div className="space-y-4">
                                 {jobs.map((job) => (
-                                    <div key={job._id} className="bg-white dark:bg-[#173f2e] p-6 rounded-2xl border border-[#1c4a36]/10 dark:border-none shadow-sm hover:shadow-md transition-all duration-200 relative group">
-                                        <button className="absolute top-6 right-6 p-2 rounded-full bg-slate-50 dark:bg-[#0f291e] text-slate-400 hover:text-amber-500 dark:text-[#e4f5ee]/60 dark:hover:text-amber-400 transition-colors cursor-pointer">
-                                            <Bookmark className="w-6 h-6" />
-                                        </button>
-
-                                        <div className="flex items-start gap-4 pr-8">
-                                            <img src={job.author_image} alt={job.author_name} className="w-12 h-12 rounded-xl object-cover" />
-
-                                            <div className="flex-1">
-                                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium bg-[#e4f5ee] dark:bg-[#0f291e] text-[#1c4a36] dark:text-[#e4f5ee] mb-2">
-                                                    {job.job_category}
-                                                </span>
-                                                <h3 className="text-lg font-bold text-[#1c4a36] dark:text-white group-hover:text-emerald-700 dark:group-hover:text-[#e4f5ee] transition-colors cursor-pointer">
-                                                    {job.job_title}
-                                                </h3>
-                                                <p className="text-sm font-medium text-slate-500 dark:text-[#e4f5ee]/70 mt-0.5">
-                                                    Posted by: {job.author_name}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex flex-wrap items-center gap-y-2 gap-x-4 mt-6 pt-4 border-t border-slate-100 dark:border-[#0f291e]/50 text-xs text-slate-500 dark:text-[#e4f5ee]/70">
-                                            <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {job.location}</span>
-                                            <span className="flex items-center gap-1.5"><Briefcase className="w-3.5 h-3.5" /> {job.job_type} ({job.work_mode})</span>
-                                            <span className="flex items-center gap-1.5">
-                                                <Clock className="w-3.5 h-3.5" />
-                                                {new Date(job.createdAt).toLocaleDateString()}
-                                            </span>
-                                        </div>
-
-                                        <div className="flex justify-between items-center mt-5 pt-2">
-                                            <span className="text-sm font-bold text-[#1c4a36] dark:text-[#e4f5ee]">
-                                                ${job.salary_min.toLocaleString()} - ${job.salary_max.toLocaleString()}
-                                                <span className="text-xs font-normal text-slate-400 dark:text-[#e4f5ee]/50">/mo</span>
-                                            </span>
-                                            <button className="px-5 py-2.5 bg-[#1c4a36] dark:bg-[#e4f5ee] text-white dark:text-[#1c4a36] font-semibold rounded-xl transition-all duration-200 hover:opacity-95 active:scale-95 shadow-sm cursor-pointer">
-                                                View Details
-                                            </button>
-                                        </div>
-                                    </div>
+                                    <JobCard key={job._id} job={job} />
                                 ))}
                             </div>
                         )}

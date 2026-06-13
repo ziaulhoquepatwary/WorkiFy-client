@@ -24,7 +24,6 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
     const adminMenu = [
         { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
         { name: "Pending Users", href: "/admin/pending-users", icon: UserPlus },
-        { name: "Pending Recruiter", href: "/admin/pending-recruiters", icon: UserCheck },
         { name: "All Users", href: "/admin/all-users", icon: Users },
         { name: "Change Plan", href: "/admin/change-plan", icon: CreditCard },
         { name: "Settings", href: "/admin/settings", icon: Settings },

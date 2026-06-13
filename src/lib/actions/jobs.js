@@ -29,7 +29,7 @@ export const getAllJobsAction = async (filters = {}) => {
         if (filters.jobType && filters.jobType.length > 0) params.append("jobType", filters.jobType.join(","));
 
         if (filters.maxSalary) params.append("maxSalary", filters.maxSalary);
-        
+
         if (filters.page) params.append("page", filters.page);
 
         const res = await axios.get(`${baseApiUrl}/api/jobs?${params.toString()}`, {
@@ -39,6 +39,18 @@ export const getAllJobsAction = async (filters = {}) => {
         return res.data;
     } catch (error) {
         console.error("Fetch jobs API error:", error.response?.data || error.message);
+        throw error;
+    }
+};
+
+export const getSingleJobAction = async (jobId) => {
+    try {
+        const res = await axios.get(`${baseApiUrl}/api/jobs/${jobId}`, {
+            withCredentials: true
+        });
+        return res.data;
+    } catch (error) {
+        console.error(`Fetch job details error for ID ${jobId}:`, error.response?.data || error.message);
         throw error;
     }
 };
