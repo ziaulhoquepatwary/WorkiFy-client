@@ -8,6 +8,8 @@ async function JobDetailsPage({ params }) {
     const { id } = await params;
     const data = await getSingleJobAction(id);
 
+    // console.log("Fetched Job Data:", data);
+
     if (!data || !data.job) {
         return (
             <div className="flex flex-col justify-center items-center min-h-screen bg-white dark:bg-[#0f291e] text-[#1c4a36] dark:text-[#e4f5ee]">
@@ -26,17 +28,41 @@ async function JobDetailsPage({ params }) {
 
                 {/* LEFT COLUMN */}
                 <div className="lg:col-span-2 space-y-6">
+                    {/* Header Showcase Section */}
                     <div className="p-6 md:p-8 bg-slate-50 dark:bg-[#173f2e] border border-[#e4f5ee] dark:border-transparent rounded-2xl relative">
                         {isExpired && (
-                            <span className="absolute top-4 right-4 bg-rose-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md">Expired</span>
+                            <span className="absolute top-4 right-4 bg-rose-600 text-white text-xs font-bold uppercase px-3 py-1 rounded-md">
+                                Expired
+                            </span>
                         )}
-                        <span className="text-xs font-bold uppercase bg-[#1c4a36] text-white dark:bg-[#e4f5ee] dark:text-[#1c4a36] px-2.5 py-1 rounded">
-                            {job.job_category}
-                        </span>
-                        <h1 className="text-2xl md:text-3xl font-extrabold text-[#1c4a36] dark:text-white mt-4">{job.job_title}</h1>
-                        <p className="text-sm opacity-70 mt-1 font-medium">Posted by: {job.author_name}</p>
 
-                        <div className="flex flex-wrap gap-4 mt-6 text-sm font-medium">
+                        {/* 🛠️ Flex Container for Image and Title */}
+                        <div className="flex flex-col sm:flex-row items-start gap-5">
+                            {/* Job Title & Category */}
+                            <div className="flex-1 min-w-0">
+                                <span className="text-xs font-bold uppercase bg-[#1c4a36] text-white dark:bg-[#e4f5ee] dark:text-[#1c4a36] px-2.5 py-1 rounded inline-block">
+                                    {job.job_category}
+                                </span>
+
+                                <h1 className="text-2xl md:text-3xl font-extrabold text-[#1c4a36] dark:text-white mt-3 break-words leading-tight">
+                                    {job.job_title}
+                                </h1>
+
+                                <p className="text-sm opacity-70 mt-1.5 font-medium">
+                                    Posted by: <span className="font-semibold text-[#1c4a36] dark:text-white">{job.author_name}</span>
+                                </p>
+                            </div>
+
+                            {/* 📸 Direct Image Tag WITHOUT Conditions */}
+                            <img
+                                src={job.author_image}
+                                alt={job.author_name}
+                                className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover bg-white p-1 border border-[#e4f5ee] dark:border-[#0f291e] shadow-sm shrink-0"
+                            />
+                        </div>
+
+                        {/* Job Badges */}
+                        <div className="flex flex-wrap gap-4 mt-6 text-sm font-medium border-t border-[#e4f5ee]/50 dark:border-[#0f291e]/50 pt-4">
                             <span className="flex items-center gap-1.5 bg-white dark:bg-[#0f291e] px-3 py-1.5 rounded-lg shadow-sm border border-slate-100 dark:border-transparent">
                                 <Briefcase className="w-4 h-4 text-emerald-600" /> {job.job_type}
                             </span>
@@ -46,6 +72,7 @@ async function JobDetailsPage({ params }) {
                         </div>
                     </div>
 
+                    {/* Details Section (Responsibilities, Requirements, etc.) */}
                     <div className="p-6 md:p-8 bg-white dark:bg-[#173f2e] border border-[#e4f5ee] dark:border-transparent rounded-2xl space-y-6">
                         <div>
                             <h3 className="text-lg font-bold text-[#1c4a36] dark:text-white mb-2 border-b border-[#e4f5ee] dark:border-[#0f291e] pb-2">Key Responsibilities</h3>
