@@ -38,7 +38,7 @@ function JobCard({ job }) {
                     ${job.salary_min.toLocaleString()} - ${job.salary_max.toLocaleString()}
                     <span className="text-xs font-normal text-slate-400 dark:text-[#e4f5ee]/50">/mo</span>
                 </span>
-                <Link href={`/jobs/${job.id}`} className="px-5 py-2.5 bg-[#1c4a36] dark:bg-[#e4f5ee] text-white dark:text-[#1c4a36] font-semibold rounded-xl transition-all duration-200 hover:opacity-95 active:scale-95 shadow-sm cursor-pointer">
+                <Link href={`/jobs/${job._id}`} className="px-5 py-2.5 bg-[#1c4a36] dark:bg-[#e4f5ee] text-white dark:text-[#1c4a36] font-semibold rounded-xl transition-all duration-200 hover:opacity-95 active:scale-95 shadow-sm cursor-pointer">
                     View Details
                 </Link>
             </div>
