@@ -54,3 +54,17 @@ export const getSingleJobAction = async (jobId) => {
         throw error;
     }
 };
+
+export const applyToJobAction = async (applicationData) => {
+    try {
+        const res = await axios.post(
+            `${baseApiUrl}/api/jobs/apply`,
+            applicationData,
+            { withCredentials: true }
+        );
+        return res.data;
+    } catch (error) {
+        console.error("Apply Job API Error:", error.response?.data || error.message);
+        throw error;
+    }
+};
