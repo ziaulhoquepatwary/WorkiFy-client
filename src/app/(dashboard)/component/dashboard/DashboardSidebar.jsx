@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User, FilePlusCorner, Users, UserPlus, UserCheck, CreditCard } from "lucide-react";
+import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User, FilePlusCorner, Users, UserPlus, UserCheck, CreditCard, Heart } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import Loading from "@/app/loading";
 
@@ -11,6 +11,15 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
     const { data: session, isPending } = authClient.useSession();
 
     const user = session?.user;
+
+    const seekerMenu = [
+        { name: "Dashboard", href: "/seeker", icon: LayoutDashboard },
+        { name: "Browse Jobs", href: "/seeker/jobs", icon: Briefcase },
+        { name: "My Applications", href: "/seeker/applications", icon: FileText },
+        { name: "Saved Jobs", href: "/seeker/saved-jobs", icon: Heart },
+        { name: "My Profile", href: "/seeker/profile", icon: User },
+        { name: "Settings", href: "/seeker/settings", icon: Settings },
+    ];
 
     const recruiterMenu = [
         { name: "Dashboard", href: "/recruiter", icon: LayoutDashboard },
@@ -29,7 +38,10 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
         { name: "Settings", href: "/admin/settings", icon: Settings },
     ];
 
-    const menuItems = user?.role === "recruiter" ? recruiterMenu : adminMenu;
+    const menuItems =
+        user?.role === "seeker" ? seekerMenu :
+            user?.role === "recruiter" ? recruiterMenu :
+                adminMenu;
 
     if (isPending) {
         return <Loading />
@@ -68,7 +80,7 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
                             <h4 className="text-sm font-semibold truncate text-[#1c4a36] dark:text-[#e4f5ee]">
                                 {user.name}
                             </h4>
-                            <p className="text-xs text-gray-500 dark:text-[#e4f5ee]/60 truncate capitalize">
+                            <p className="text-xs text-gray-500 dark:text-[#e4f5ee]/60 truncate">
                                 {user.email}
                             </p>
                             {user.isPremium && (
