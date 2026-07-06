@@ -16,10 +16,10 @@ function ApplyFormClient({ jobId, user }) {
         const payload = {
             jobId,
             resumeUrl: data.resumeUrl,
-            coverLetter: data.coverLetter || undefined,
-            linkedinUrl: data.linkedinUrl || undefined,
-            portfolioUrl: data.portfolioUrl,
-            otherLink: data.otherLink || undefined,
+            coverLetter: data.coverLetter || null,
+            linkedinUrl: data.linkedinUrl || null,
+            portfolioUrl: data.portfolioUrl || null,
+            otherLink: data.otherLink || null,
         };
 
         try {
