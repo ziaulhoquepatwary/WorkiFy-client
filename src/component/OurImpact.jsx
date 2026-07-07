@@ -59,7 +59,7 @@ function OurImpact() {
 
                         <div className="pt-2">
                             <Link
-                                href="/about"
+                                href="/company"
                                 className="inline-block rounded-xl bg-[#1c4a36] px-6 py-3.5 text-sm font-bold text-white shadow-md hover:bg-[#1c4a36]/90 dark:bg-[#e4f5ee] dark:text-[#1c4a36] dark:hover:bg-white transition-all duration-200 hover:scale-105"
                             >
                                 More About Us
