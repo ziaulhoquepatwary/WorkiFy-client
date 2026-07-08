@@ -19,7 +19,7 @@ export const applyToJobAction = async (applicationData) => {
 export const getMyApplications = async (page = 1, limit = 10) => {
     try {
         const res = await axios.get(
-            `${baseApiUrl}/api/applications/my-application?page=${page}&limit=${limit}`,
+            `${baseApiUrl}/api/application/my-applications?page=${page}&limit=${limit}`,
             {
                 withCredentials: true
             }
