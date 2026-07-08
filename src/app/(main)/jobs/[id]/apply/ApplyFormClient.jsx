@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { ArrowLeft, Send, Link2, FileText, Linkedin, Briefcase } from "lucide-react";
-import { applyToJobAction } from "@/lib/actions/jobs";
+import { applyToJobAction } from "@/lib/actions/application";
 
 function ApplyFormClient({ jobId, user }) {
     const router = useRouter();

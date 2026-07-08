@@ -14,7 +14,7 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
 
     const seekerMenu = [
         { name: "Dashboard", href: "/seeker", icon: LayoutDashboard },
-        { name: "Browse Jobs", href: "/seeker/jobs", icon: Briefcase },
+        { name: "Browse Jobs", href: "/jobs", icon: Briefcase },
         { name: "My Applications", href: "/seeker/applications", icon: FileText },
         { name: "Saved Jobs", href: "/seeker/saved-jobs", icon: Heart },
         { name: "My Profile", href: "/seeker/profile", icon: User },
