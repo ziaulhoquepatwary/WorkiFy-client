@@ -54,3 +54,15 @@ export const getSingleJobAction = async (jobId) => {
         throw error;
     }
 };
+
+export const getMyPostedJobs = async () => {
+    try {
+        const res = await axios.get(`${baseApiUrl}/api/jobs/my-posted-jobs`, {
+            withCredentials: true
+        });
+        return res.data;
+    } catch (error) {
+        console.error("API error response:", error.response?.data || error.message);
+        throw error;
+    }
+};

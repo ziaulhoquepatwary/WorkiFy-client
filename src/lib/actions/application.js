@@ -63,3 +63,34 @@ export const deleteApplication = async (applicationId) => {
         throw error;
     }
 };
+
+export const getJobApplicants = async (jobId, page = 1, limit = 10) => {
+    try {
+        const res = await axios.get(
+            `${baseApiUrl}/api/application/job-applicants/${jobId}?page=${page}&limit=${limit}`,
+            {
+                withCredentials: true
+            }
+        );
+        return res.data;
+    } catch (error) {
+        console.error("API error response:", error.response?.data || error.message);
+        throw error;
+    }
+};
+
+export const updateApplicationStatus = async (applicationId, status) => {
+    try {
+        const res = await axios.patch(
+            `${baseApiUrl}/api/application/status/${applicationId}`,
+            { status },
+            {
+                withCredentials: true
+            }
+        );
+        return res.data;
+    } catch (error) {
+        console.error("API error response:", error.response?.data || error.message);
+        throw error;
+    }
+};
