@@ -3,6 +3,8 @@
 function ViewSubmissionModal({ applicant, onClose }) {
     if (!applicant) return null;
 
+    console.log(applicant)
+
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
             <div className="w-full max-w-2xl rounded-xl bg-white p-6 shadow-2xl dark:bg-[#0f291e] border border-gray-200 dark:border-[#173f2e] text-gray-800 dark:text-[#e4f5ee]">

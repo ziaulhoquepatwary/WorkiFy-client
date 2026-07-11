@@ -55,11 +55,14 @@ export const getSingleJobAction = async (jobId) => {
     }
 };
 
-export const getMyPostedJobs = async () => {
+export const getMyPostedJobs = async (page = 1, limit = 10) => {
     try {
-        const res = await axios.get(`${baseApiUrl}/api/jobs/my-posted-jobs`, {
-            withCredentials: true
-        });
+        const res = await axios.get(
+            `${baseApiUrl}/api/jobs/my-posted-jobs?page=${page}&limit=${limit}`,
+            {
+                withCredentials: true
+            }
+        );
         return res.data;
     } catch (error) {
         console.error("API error response:", error.response?.data || error.message);

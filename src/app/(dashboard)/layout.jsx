@@ -23,7 +23,7 @@ function Dashboard({ children }) {
 
                 <div className="flex-1 flex flex-col min-w-0">
                     <DashboardHeader onMenuClick={() => setIsSidebarOpen(true)} />
-                    <main className="flex-1 p-4 md:p-6 overflow-y-auto">
+                    <main className="flex-1 overflow-y-auto">
                         {children}
                     </main>
                 </div>

@@ -21,7 +21,7 @@ function SeekerDashboard() {
     ];
 
     return (
-        <div className="space-y-8">
+        <div className="space-y-8 p-4 md:p-6">
             {/* Welcome Section */}
             <div>
                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1c4a36] dark:text-[#e4f5ee]">
