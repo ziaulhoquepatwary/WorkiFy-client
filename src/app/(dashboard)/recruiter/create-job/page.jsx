@@ -68,7 +68,7 @@ function CreateJob() {
 
 
     return (
-        <div className="max-w-4xl mx-auto space-y-6 pb-12 p-4 md:p-6">
+        <div className="max-w-7xl mx-auto space-y-6 pb-12 p-4 md:p-6">
             <div>
                 <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-[#1c4a36] dark:text-[#e4f5ee]">Post a New Job</h1>
                 <p className="text-sm text-slate-500 dark:text-[#e4f5ee]/60 mt-1">Fill out the information below to find the best talent.</p>

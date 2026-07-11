@@ -17,7 +17,7 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
         { name: "Browse Jobs", href: "/jobs", icon: Briefcase },
         { name: "My Applications", href: "/seeker/applications", icon: FileText },
         { name: "Saved Jobs", href: "/seeker/saved-jobs", icon: Heart },
-        { name: "My Profile", href: "/seeker/profile", icon: User },
+        { name: "My Profile", href: "/my-profile", icon: User },
     ];
 
     const recruiterMenu = [
@@ -25,7 +25,7 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
         { name: "Create Job", href: "/recruiter/create-job", icon: FilePlusCorner },
         { name: "Manage Jobs", href: "/recruiter/manage-jobs", icon: Briefcase },
         { name: "Applications", href: "/recruiter/applications", icon: FileText },
-        { name: "My Profile", href: "/recruiter/profile", icon: User },
+        { name: "My Profile", href: "/my-profile", icon: User },
     ];
 
     const adminMenu = [
@@ -33,7 +33,7 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
         { name: "Pending Users", href: "/admin/pending-users", icon: UserPlus },
         { name: "All Users", href: "/admin/all-users", icon: Users },
         { name: "Change Plan", href: "/admin/change-plan", icon: CreditCard },
-        { name: "My Profile", href: "/admin/profile", icon: User },
+        { name: "My Profile", href: "/my-profile", icon: User },
     ];
 
     const menuItems =
