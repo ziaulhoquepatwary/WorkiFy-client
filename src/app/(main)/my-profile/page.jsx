@@ -6,11 +6,13 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import Loading from '@/app/loading';
+import { useRouter } from 'next/navigation';
 
 function MyProfile() {
     const { data: session, isPending } = authClient.useSession();
     const [isEditing, setIsEditing] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
+    const router = useRouter();
 
     const user = session?.user;
 
@@ -84,9 +86,12 @@ function MyProfile() {
                 {/* Header Controls */}
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <Link href="/" className="p-2.5 bg-[#e4f5ee]/40 dark:bg-[#173f2e] border border-[#1c4a36]/10 rounded-xl hover:text-[#1c4a36] dark:hover:text-white transition-all group cursor-pointer">
+                        <button
+                            onClick={() => router.back()}
+                            className="p-2.5 bg-[#e4f5ee]/40 dark:bg-[#173f2e] border border-[#1c4a36]/10 rounded-xl hover:text-[#1c4a36] dark:hover:text-white transition-all group cursor-pointer"
+                        >
                             <ArrowLeft size={18} className="group-hover:-translate-x-0.5 transition-transform" />
-                        </Link>
+                        </button>
                         <div>
                             <h1 className="text-2xl font-black tracking-tight text-[#1c4a36] dark:text-white">Account Pipeline</h1>
                             <p className="text-xs text-slate-400 dark:text-[#e4f5ee]/60 uppercase tracking-wider font-semibold">{user?.role || "User"} Identity</p>

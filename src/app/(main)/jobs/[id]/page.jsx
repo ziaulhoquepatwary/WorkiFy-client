@@ -2,14 +2,12 @@ import { getSingleJobAction } from "@/lib/actions/jobs";
 import { Briefcase, MapPin, Calendar, DollarSign, Users, Award, CheckCircle2, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import ApplyButton from "./ApplyButton";
+import BackButton from "./BackButton";
 import ProtectedRoute from "../../../../../utils/ProtectedRoute";
-
 
 async function JobDetailsPage({ params }) {
     const { id } = await params;
     const data = await getSingleJobAction(id);
-
-    // console.log("Fetched Job Data:", data);
 
     if (!data || !data.job) {
         return (
@@ -25,8 +23,12 @@ async function JobDetailsPage({ params }) {
 
     return (
         <ProtectedRoute>
-            <div className="p-4 md:p-8 bg-white dark:bg-[#0f291e] text-[#1c4a36] dark:text-[#e4f5ee] transition-colors duration-300">
-                <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6Heading">
+            <div className="px-4 md:px-8 py-2 bg-white dark:bg-[#0f291e] text-[#1c4a36] dark:text-[#e4f5ee] transition-colors duration-300">
+                <div className="max-w-6xl mx-auto mb-2">
+                    <BackButton />
+                </div>
+
+                <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
 
                     {/* LEFT COLUMN */}
                     <div className="lg:col-span-2 space-y-6">
@@ -38,9 +40,7 @@ async function JobDetailsPage({ params }) {
                                 </span>
                             )}
 
-                            {/* 🛠️ Flex Container for Image and Title */}
                             <div className="flex flex-col sm:flex-row items-start gap-5">
-                                {/* Job Title & Category */}
                                 <div className="flex-1 min-w-0">
                                     <span className="text-xs font-bold uppercase bg-[#1c4a36] text-white dark:bg-[#e4f5ee] dark:text-[#1c4a36] px-2.5 py-1 rounded inline-block">
                                         {job.job_category}
@@ -55,7 +55,6 @@ async function JobDetailsPage({ params }) {
                                     </p>
                                 </div>
 
-                                {/* 📸 Direct Image Tag WITHOUT Conditions */}
                                 <img
                                     src={job.author_image}
                                     alt={job.author_name}
@@ -63,7 +62,6 @@ async function JobDetailsPage({ params }) {
                                 />
                             </div>
 
-                            {/* Job Badges */}
                             <div className="flex flex-wrap gap-4 mt-6 text-sm font-medium border-t border-[#e4f5ee]/50 dark:border-[#0f291e]/50 pt-4">
                                 <span className="flex items-center gap-1.5 bg-white dark:bg-[#0f291e] px-3 py-1.5 rounded-lg shadow-sm border border-slate-100 dark:border-transparent">
                                     <Briefcase className="w-4 h-4 text-emerald-600" /> {job.job_type}
@@ -74,7 +72,7 @@ async function JobDetailsPage({ params }) {
                             </div>
                         </div>
 
-                        {/* Details Section (Responsibilities, Requirements, etc.) */}
+                        {/* Details Section */}
                         <div className="p-6 md:p-8 bg-white dark:bg-[#173f2e] border border-[#e4f5ee] dark:border-transparent rounded-2xl space-y-6">
                             <div>
                                 <h3 className="text-lg font-bold text-[#1c4a36] dark:text-white mb-2 border-b border-[#e4f5ee] dark:border-[#0f291e] pb-2">Key Responsibilities</h3>
@@ -103,7 +101,7 @@ async function JobDetailsPage({ params }) {
                     </div>
 
                     {/* RIGHT SIDEBAR */}
-                    <div className="space-y-6 ml-2">
+                    <div className="space-y-6 lg:ml-2">
                         <div className="p-6 bg-slate-50 dark:bg-[#173f2e] border border-[#e4f5ee] dark:border-transparent rounded-2xl space-y-5">
                             <h3 className="text-md font-bold uppercase tracking-wider opacity-80 mb-2">Job Summary</h3>
 
@@ -158,7 +156,7 @@ async function JobDetailsPage({ params }) {
                 </div>
             </div>
         </ProtectedRoute>
-    )
+    );
 }
 
-export default JobDetailsPage
+export default JobDetailsPage;
