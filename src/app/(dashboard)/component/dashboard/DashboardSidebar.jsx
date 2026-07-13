@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User, FilePlusCorner, Users, UserPlus, UserCheck, CreditCard, Heart } from "lucide-react";
+import { LayoutDashboard, Building2, Briefcase, FileText, Settings, ChevronRight, User, FilePlusCorner, Users, UserPlus, UserCheck, CreditCard, Heart, X } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import Loading from "@/app/loading";
 
@@ -53,16 +53,26 @@ function DashboardSidebar({ isOpen, closeSidebar }) {
                 w-64 h-screen flex flex-col justify-between border-r transition-all duration-300 z-50
                 bg-white border-[#e4f5ee] text-slate-700 
                 dark:bg-[#0f291e] dark:border-[#173f2e] dark:text-[#e4f5ee]/80
-                fixed inset-y-0 left-0 md:sticky md:top-0
-                ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+                fixed inset-y-0 left-0 lg:sticky lg:top-0
+                ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
             `}
         >
             <div className="flex flex-col pt-6 overflow-y-auto flex-1">
-                <div className="px-6 mb-8">
+                {/* Header Section with Logo and Close Button */}
+                <div className="px-6 mb-8 flex items-center justify-between">
                     <Link href="/" className="text-3xl font-bold font-heading tracking-tight">
                         <span className="text-[#1c4a36] dark:text-[#e4f5ee]">Worki</span>
                         <span className="text-gray-500 dark:text-white/70">Fy</span>
                     </Link>
+
+                    {/* Close (Cross) Button for screens smaller than 1024px */}
+                    <button
+                        onClick={closeSidebar}
+                        className="p-1 rounded-lg lg:hidden text-slate-500 hover:bg-[#e4f5ee] dark:text-[#e4f5ee]/70 dark:hover:bg-[#173f2e] transition-colors"
+                        aria-label="Close sidebar"
+                    >
+                        <X size={20} />
+                    </button>
                 </div>
 
                 <div className="px-4 mb-6">

@@ -22,9 +22,10 @@ function DashboardHeader({ onMenuClick }) {
 
             {/* Search and Mobile Menu Button */}
             <div className="flex items-center gap-4 flex-1 max-w-xl">
+                {/* 1024px (lg) এর নিচে মেনু বাটন দেখাবে */}
                 <button
                     onClick={onMenuClick}
-                    className="p-2 rounded-lg md:hidden text-slate-600 hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]"
+                    className="p-2 rounded-lg lg:hidden text-slate-600 hover:bg-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#173f2e]"
                 >
                     <Menu size={20} />
                 </button>
