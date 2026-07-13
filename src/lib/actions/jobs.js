@@ -70,7 +70,7 @@ export const getMyPostedJobs = async (page = 1, limit = 10) => {
     }
 };
 
-export const updateJobById = async (jobId, jobData) => {
+export const updateJob = async (jobId, jobData) => {
     try {
         const res = await axios.patch(`${baseApiUrl}/api/jobs/${jobId}`, jobData, {
             withCredentials: true
