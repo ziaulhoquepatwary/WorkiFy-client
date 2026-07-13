@@ -55,7 +55,7 @@ function ApplicationActions({ applicationId, jobId, onDeleteSuccess }) {
                     onClick={() => setIsModalOpen(true)}
                     className="px-3 py-1.5 text-xs font-semibold rounded-md border border-[#1c4a36] text-[#1c4a36] hover:bg-[#1c4a36] hover:text-white dark:border-[#e4f5ee] dark:text-[#e4f5ee] dark:hover:bg-[#e4f5ee] dark:hover:text-[#1c4a36] transition-all"
                 >
-                    View Submission
+                    Submission & Status
                 </button>
 
                 {/* View Job Details Button */}
