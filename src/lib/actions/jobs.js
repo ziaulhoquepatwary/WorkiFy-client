@@ -93,3 +93,27 @@ export const deleteJobById = async (jobId) => {
         throw error;
     }
 };
+
+export const toggleSaveJobById = async (jobId) => {
+    try {
+        const res = await axios.post(`${baseApiUrl}/api/saveJob/save/${jobId}`, {}, {
+            withCredentials: true
+        });
+        return res.data;
+    } catch (error) {
+        console.error("API error response:", error.response?.data || error.message);
+        throw error;
+    }
+};
+
+export const fetchSavedJobs = async () => {
+    try {
+        const res = await axios.get(`${baseApiUrl}/api/saveJob/saved`, {
+            withCredentials: true
+        });
+        return res.data;
+    } catch (error) {
+        console.error("API error response:", error.response?.data || error.message);
+        throw error;
+    }
+};
